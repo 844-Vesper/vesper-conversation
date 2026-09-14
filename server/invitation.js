@@ -1,4 +1,5 @@
-// Web Crypto only. No database, visitor identifiers, request logging or booking data.
+// No request logging, IP collection or booking data. Locks use random browser credentials.
+import { browserFingerprint, readBrowserToken } from './invite-locks.js';
 const encoder = new TextEncoder();
 export const SESSION_COOKIE = '__Host-vesper-session';
 export const RETRY_COOKIE = '__Host-vesper-retry';
@@ -16,10 +17,14 @@ export async function configuration(env) {
     throw new Error('Invitation configuration unavailable');
   }
   const codes = [...new Set(values.map(normalizeCode))].sort();
+  const adminCode = normalizeCode(env.ADMIN_INVITE_CODE);
+  if (adminCode && (adminCode.length < 16 || adminCode.length > 128 || codes.includes(adminCode))) {
+    throw new Error('Admin configuration unavailable');
+  }
   // Changing the list also invalidates existing sessions, including for revoked invites.
-  const material = await crypto.subtle.digest('SHA-256', encoder.encode(JSON.stringify([env.SESSION_SECRET, codes])));
+  const material = await crypto.subtle.digest('SHA-256', encoder.encode(JSON.stringify(['browser-lock-v1', env.SESSION_SECRET, codes, adminCode])));
   const key = await crypto.subtle.importKey('raw', material, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign', 'verify']);
-  return { codes, key };
+  return { codes, key, adminCode };
 }
 
 function base64url(bytes) {
@@ -76,8 +81,13 @@ export function isSameOrigin(request) {
   return (!origin || origin === new URL(request.url).origin) && (!site || site === 'same-origin' || site === 'none');
 }
 
-export async function hasSession(request, key) {
-  return Boolean(await readToken(request, SESSION_COOKIE, key, 'session'));
+export async function hasSession(request, key, env) {
+  const session = await readToken(request, SESSION_COOKIE, key, 'session');
+  if (!session) return false;
+  if (session.admin === true) return true;
+  if (!/^[a-f0-9]{64}$/.test(session.invite || '') || !/^[a-f0-9]{64}$/.test(session.browser || '')) return false;
+  try { return session.browser === await browserFingerprint(env, session.invite, readBrowserToken(request)); }
+  catch { return false; }
 }
 
 // Fixed-length digest comparisons avoid exposing an early string-match position.

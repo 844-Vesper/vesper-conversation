@@ -3,3 +3,8 @@ INVITE_CODES='[]'
 # Generate with: openssl rand -hex 32
 SESSION_SECRET=''
 CALCOM_EVENT_URL='CALCOM_EVENT_URL_HERE'
+# Generate a separate, stable value with: openssl rand -hex 32
+INVITE_LOCK_SECRET=''
+# Optional founders-only override, separate from INVITE_CODES (at least 16 characters).
+# Generate with: openssl rand -hex 16
+ADMIN_INVITE_CODE=''

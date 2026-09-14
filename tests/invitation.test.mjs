@@ -4,15 +4,18 @@ import { randomBytes } from 'node:crypto';
 import { onRequest as verify } from '../functions/api/verify-invite.js';
 import { onRequest as scheduling } from '../functions/api/scheduling.js';
 import { configuration, signToken, SESSION_COOKIE, RETRY_COOKIE } from '../server/invitation.js';
+import { lockNamespace } from './helpers/lock-namespace.mjs';
+import { BROWSER_COOKIE } from '../server/invite-locks.js';
+const browserToken = randomBytes(32).toString('hex');
 
 // All accepted credentials are generated at runtime, never stored in source.
 function fixture() {
   const code = randomBytes(16).toString('hex').toUpperCase();
-  return { code, env: { INVITE_CODES: JSON.stringify([code]), SESSION_SECRET: randomBytes(32).toString('hex'), CALCOM_EVENT_URL: 'https://cal.com/example/conversation' } };
+  return { code, env: { INVITE_CODES: JSON.stringify([code]), SESSION_SECRET: randomBytes(32).toString('hex'), CALCOM_EVENT_URL: 'https://cal.com/example/conversation', INVITE_LOCK_SECRET: randomBytes(32).toString('hex'), INVITE_LOCKS: lockNamespace() } };
 }
 function request(method = 'GET', body, cookie, extra = {}) {
   return new Request('https://conversation.example/api/verify-invite', {
-    method, headers: { Origin: 'https://conversation.example', ...(body !== undefined ? { 'Content-Type': 'application/json' } : {}), ...(cookie ? { Cookie: cookie } : {}), ...extra },
+    method, headers: { Origin: 'https://conversation.example', ...(body !== undefined ? { 'Content-Type': 'application/json' } : {}), Cookie: `${BROWSER_COOKIE}=${browserToken}${cookie ? `; ${cookie}` : ''}`, ...extra },
     ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
   });
 }
