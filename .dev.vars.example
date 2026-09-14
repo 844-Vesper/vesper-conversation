@@ -1,0 +1,5 @@
+# Copy to .dev.vars. Never put real codes in this example file.
+INVITE_CODES='[]'
+# Generate with: openssl rand -hex 32
+SESSION_SECRET=''
+CALCOM_EVENT_URL='CALCOM_EVENT_URL_HERE'
