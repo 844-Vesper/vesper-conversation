@@ -31,14 +31,7 @@
   async function showState(id, focus = true) {
     const next = byId(id);
     if (next === activeState) return;
-    activeState.classList.remove('is-entering');
-    activeState.classList.add('is-leaving');
-    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      await new Promise(resolve => setTimeout(resolve, 400));
-    }
     activeState.hidden = true;
-    activeState.classList.remove('is-leaving');
-    next.classList.add('is-entering');
     next.hidden = false;
     activeState = next;
     if (focus) next.querySelector('h2, input')?.focus({ preventScroll: true });
@@ -168,6 +161,7 @@
 
   scheduleButton.addEventListener('click', async () => {
     scheduleButton.disabled = true;
+    scheduleButton.setAttribute('aria-busy', 'true');
     schedulingFeedback.textContent = '';
     try {
       // Recheck the session on every opening, including after a tab has been left idle.
@@ -186,6 +180,7 @@
       schedulingFeedback.textContent = 'The calendar is unavailable just now. Please try again shortly.';
     } finally {
       scheduleButton.disabled = false;
+      scheduleButton.removeAttribute('aria-busy');
     }
   });
 

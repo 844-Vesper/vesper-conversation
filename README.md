@@ -145,8 +145,8 @@ See the [Cloudflare custom-domain guide](https://developers.cloudflare.com/pages
 
 | File | Purpose |
 | --- | --- |
-| `index.html`, `styles.css`, `script.js` | Page, visual design, and invitation/modal interactions |
-| `assets/vesper-logo.jpg` | Converted from the supplied PNG; CSS renders its white background seamlessly on black |
+| `index.html`, `tokens.css`, `styles.css`, `script.js` | Page, visual design, and invitation/modal interactions |
+| `assets/vesper-mark.svg` | Transparent bone rendering of the supplied mark; original pixels embedded losslessly, with no external asset references |
 | `assets/vesper-logo.png` | Preserved original, not copied into the deployment |
 | `assets/cormorant-garamond.ttf` and license | Locally served Cormorant Garamond |
 | `functions/api/verify-invite.js` | Code checks, session restoration and cooldown |
@@ -159,5 +159,7 @@ See the [Cloudflare custom-domain guide](https://developers.cloudflare.com/pages
 | `build.mjs` | Copies only public assets to `dist/` |
 | `.dev.vars.example`, `.gitignore` | Safe configuration template and exclusions |
 | `tests/` | Built-in Node tests; no testing packages required |
+
+See [DESIGN.md](DESIGN.md) for the independently maintained Vesper tokens, typography, and component conventions.
 
 The site has no application logging or analytics. Cloudflare and Cal.com still handle their own infrastructure and service data; the Vesper source does not control their retention settings. Do not enable request-body logging for the invitation endpoint.

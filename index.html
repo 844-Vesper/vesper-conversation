@@ -9,6 +9,7 @@
     <title>A Conversation — Vesper</title>
     <link rel="icon" href="data:,">
     <link rel="preload" href="/assets/cormorant-garamond.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="stylesheet" href="/tokens.css">
     <link rel="stylesheet" href="/styles.css">
     <script src="/script.js" defer></script>
   </head>
@@ -16,7 +17,7 @@
     <div class="page">
       <main class="invitation">
         <header class="identity">
-          <img class="logo" src="/assets/vesper-logo.jpg" width="245" height="412" alt="Vesper">
+          <img class="logo" src="/assets/vesper-mark.svg" width="245" height="412" alt="Vesper">
           <h1>A Conversation</h1>
         </header>
 
@@ -37,7 +38,6 @@
 
           <section id="scheduling-state" class="state" aria-labelledby="scheduling-title" hidden>
             <h2 id="scheduling-title" tabindex="-1">A Rendezvous</h2>
-            <p class="introduction">Choose a time below.</p>
             <button id="schedule-button" class="button" type="button" aria-haspopup="dialog">Choose a Time</button>
             <p id="scheduling-feedback" class="feedback" role="status" aria-live="polite" aria-atomic="true"></p>
           </section>

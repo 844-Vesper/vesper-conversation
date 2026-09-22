@@ -8,11 +8,11 @@ test('the deployment contains only intended public assets and resolves local lin
   const files = (await readdir('dist', { recursive: true })).filter(file => file !== 'assets').sort();
   assert.deepEqual(files, [
     '_headers', '_routes.json', 'assets/Cormorant-Garamond-OFL.txt',
-    'assets/cormorant-garamond.ttf', 'assets/vesper-logo.jpg',
-    'index.html', 'robots.txt', 'script.js', 'styles.css',
+    'assets/cormorant-garamond.ttf', 'assets/vesper-mark.svg',
+    'index.html', 'robots.txt', 'script.js', 'styles.css', 'tokens.css',
   ].sort());
   const html = await readFile('dist/index.html', 'utf8');
-  const css = await readFile('dist/styles.css', 'utf8');
+  const css = (await readFile('dist/styles.css', 'utf8')) + (await readFile('dist/tokens.css', 'utf8'));
   for (const match of `${html}\n${css}`.matchAll(/(?:src=|href=|url\()["'](\/[^"']+)/g)) {
     await readFile(`dist${match[1]}`);
   }

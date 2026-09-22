@@ -1,0 +1,83 @@
+/* Vesper canonical tokens v1. Independent local copy; no cross-project imports. */
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("/assets/cormorant-garamond.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+:root {
+  color-scheme: dark;
+  --vesper-bg: #090908;
+  --vesper-surface: #151310;
+  --vesper-surface-raised: #1c1915;
+  --vesper-hover: #211c16;
+  --vesper-text: #e7dfce;
+  --vesper-text-secondary: #a59d90;
+  --vesper-text-quiet: #8b8479;
+  --vesper-text-inverse: #090908;
+  --vesper-umber: #352b22;
+  --vesper-umber-hover: #403329;
+  --vesper-accent-text: #c3b19b;
+  --vesper-rule: #332d26;
+  --vesper-rule-strong: #514437;
+  --vesper-control-border: #82715b;
+  --vesper-control-border-hover: #baa488;
+  --vesper-focus: #e7dfce;
+  --vesper-selected-bg: #e7dfce;
+  --vesper-selected-text: #090908;
+  --vesper-selection-bg: #352b22;
+  --vesper-backdrop: rgb(0 0 0 / 85%);
+
+  --vesper-font-serif: "Cormorant Garamond", "Baskerville", "Palatino Linotype", Georgia, serif;
+  --vesper-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --vesper-weight-heading: 400;
+  --vesper-leading-heading: 1.15;
+  --vesper-leading-body: 1.5;
+  --vesper-leading-compact: 1.4;
+  --vesper-tracking-heading: -0.015em;
+  --vesper-tracking-body: 0;
+  --vesper-tracking-label: 0.08em;
+  --vesper-tracking-wordmark: 0.08em;
+  --vesper-tracking-code: 0.04em;
+  --vesper-text-xs: 0.75rem;
+  --vesper-text-sm: 0.875rem;
+  --vesper-text-md: 1rem;
+  --vesper-text-lg: 1.125rem;
+  --vesper-text-xl: 1.25rem;
+  --vesper-heading-sm: 1.5rem;
+  --vesper-heading-md: 2rem;
+  --vesper-heading-lg: 2.5rem;
+  --vesper-heading-xl: 2.875rem;
+
+  --vesper-space-1: 0.25rem;
+  --vesper-space-2: 0.5rem;
+  --vesper-space-3: 0.75rem;
+  --vesper-space-4: 1rem;
+  --vesper-space-6: 1.5rem;
+  --vesper-space-8: 2rem;
+  --vesper-space-10: 2.5rem;
+  --vesper-space-12: 3rem;
+  --vesper-space-16: 4rem;
+  --vesper-space-20: 5rem;
+  --vesper-radius: 0;
+  --vesper-border-width: 1px;
+  --vesper-focus-width: 2px;
+  --vesper-focus-offset: 4px;
+  --vesper-control-height: 2.75rem;
+  --vesper-control-height-large: 3.25rem;
+  --vesper-shadow: none;
+  --vesper-transition: 120ms ease-out;
+
+  /* Operational semantics only: never brand, navigation, or category colors. */
+  --vesper-status-healthy: #abb89c;
+  --vesper-status-warning: #c8aa7d;
+  --vesper-status-error: #d2a398;
+  --vesper-status-expired: #a59d90;
+
+  /* Calendar treatment can change without altering other selected controls. */
+  --vesper-calendar-selected-bg: var(--vesper-selected-bg);
+  --vesper-calendar-selected-text: var(--vesper-selected-text);
+  --vesper-calendar-selected-border: var(--vesper-selected-bg);
+}
+
